@@ -1,5 +1,5 @@
 # HeadMotion
-Repository for high speed motion tracking of a human head
+Repository for motion tracking of a human head.
 
 ## Hardware
 
