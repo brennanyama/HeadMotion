@@ -6,9 +6,14 @@ const int MPU1 = 0x68;      // MPU6050 I2C address
 const int MPU2 = 0x69;      // MPU6050 I2C address
 float accX1, accY1, accZ1;  // linear acceleration from accelerometer1
 float accX2, accY2, accZ2;  // linear acceleration from accelerometer2
+int x1,y1,z1;               // linear acceleration from accelerometer1 converted to int
+int x2,y2,z2;               // linear acceleration from accelerometer2 converted to int
 unsigned long t;            // time
 unsigned int tLast;         // last time
 unsigned int dt;            // time step
+
+
+
 
 void setup() {
   
@@ -77,27 +82,32 @@ void loop() {
   accZ2 = (Wire.read()<<8|Wire.read())/2048.0;  // z-axis acceleration [g]
   Wire.endTransmission(true);
 
+  // Convert accelerometer data to int
+  x1 = accX1*100;
+  y1 = accY1*100;
+  z1 = accZ1*100;
+  x2 = accX2*100;
+  y2 = accY2*100;
+  z2 = accZ2*100;
+
   // Time calculations
   tLast = t;
   t = micros();
   dt = t-tLast;
 
-  // Print  
+  // Print    
   Serial.print(dt);
   Serial.print(',');
-  Serial.print(accX1);
+  Serial.print(x1);
   Serial.print(',');
-  Serial.print(accY1);
+  Serial.print(y1);
   Serial.print(',');
-  Serial.print(accZ1);
+  Serial.print(z1);
   Serial.print(',');
-  Serial.print(accX2);
+  Serial.print(x2);
   Serial.print(',');
-  Serial.print(accY2);
+  Serial.print(y2);
   Serial.print(',');
-  Serial.println(accZ2);
-
-//  Serial.println(dt);
-
+  Serial.println(z2);
 
 }
